@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #0A0A0A;
+  --color-foreground: #EDEDED;
+  --color-neon: #FF0000;
+  --color-neon-dark: #CC0000;
+  --color-dark-100: #0A0A0A;
+  --color-dark-200: #111111;
+  --color-dark-300: #1A1A1A;
+  --color-dark-400: #222222;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #111111;
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Base ────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-dark-100);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ── Tech-Grid Background ────────────────────────── */
+.tech-grid {
+  background-image:
+    linear-gradient(rgba(255, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.tech-grid-dense {
+  background-image:
+    linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 0, 0, 0.06) 0%, transparent 70%);
+  background-size: 40px 40px, 40px 40px, 100% 100%;
+}
+
+/* ── Neon Glow Button ────────────────────────────── */
+.btn-neon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  background: var(--color-neon);
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 15px rgba(255, 0, 0, 0.4),
+    0 0 40px rgba(255, 0, 0, 0.15);
+}
+.btn-neon:hover {
+  background: var(--color-neon-dark);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px rgba(255, 0, 0, 0.6),
+    0 0 60px rgba(255, 0, 0, 0.25);
+}
+
+/* ── Glow Pulse Keyframe ─────────────────────────── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 15px rgba(255, 0, 0, 0.4),
+      0 0 40px rgba(255, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 25px rgba(255, 0, 0, 0.6),
+      0 0 60px rgba(255, 0, 0, 0.25);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── Fade-in Animation ───────────────────────────── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+.animate-delay-500 { animation-delay: 0.5s; }
+.animate-delay-600 { animation-delay: 0.6s; }
+
+/* ── Circular Stat Ring ──────────────────────────── */
+@keyframes ring-fill {
+  from { --ring-progress: 0; }
+}
+
+@property --ring-progress {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
+.stat-ring {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ── Section Headings ────────────────────────────── */
+.section-heading {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.section-subheading {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.7;
+  opacity: 0.7;
+  max-width: 600px;
 }
