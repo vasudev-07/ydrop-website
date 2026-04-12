@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ydrop — We Build & Grow | Web Development & Marketing Agency",
+  title: "Redvolt | Next-Gen Web Engineering & Digital Marketing",
   description:
-    "YoursDrop (ydrop) combines world-class UI/UX design, website engineering, and data-driven marketing to drive measurable business growth.",
+    "High-performance digital solutions by Redvolt.",
 };
 
 export default function RootLayout({
