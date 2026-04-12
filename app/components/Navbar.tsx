@@ -16,7 +16,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <a href="#hero" className="text-xl font-extrabold tracking-tight">
-          <span className="text-neon">Red</span>volt
+          <span className="text-neon">y</span>drop
         </a>
 
         {/* Desktop links */}

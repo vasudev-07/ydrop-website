@@ -191,10 +191,10 @@ export default function GetInTouch() {
 
         {/* ── Bottom bar ─────────────────────────── */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-foreground/30">
-          <p>&copy; {new Date().getFullYear()} <span className="text-neon">Red</span>volt. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} ydrop. All rights reserved.</p>
           <p>
             Designed &amp; built with{" "}
-            <span className="text-neon">&hearts;</span> by <span className="text-neon">Red</span>volt
+            <span className="text-neon">&hearts;</span> by ydrop
           </p>
         </div>
       </div>
