@@ -20,7 +20,6 @@ export default function HeroSection() {
 
         {/* Headline */}
         <h1 className="animate-fade-in-up animate-delay-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight">
-          <span className="text-foreground">ydrop:</span>{" "}
           <span className="text-neon">We don&apos;t just build.</span>
           <br />
           <span className="text-foreground">
