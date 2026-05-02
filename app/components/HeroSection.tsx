@@ -46,7 +46,7 @@ export default function HeroSection() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative min-h-screen overflow-hidden grid lg:grid-cols-[60%_40%] items-center"
+      className="relative min-h-screen overflow-hidden grid lg:grid-cols-[60%_40%] items-center tech-grid-dense"
     >
       {/* ── Particle field (z-0, behind everything) ── */}
       <ParticleBackground />
@@ -82,7 +82,7 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="relative z-10 px-6 py-20 text-center flex flex-col items-center justify-center">
+      <div className="relative z-10 px-6 pt-24 pb-16 lg:py-20 text-center flex flex-col items-center justify-center">
         {/* Badge */}
         <div className="animate-fade-in-up inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-neon/20 bg-neon/5 text-neon text-sm font-semibold tracking-wide uppercase">
           <span className="w-2 h-2 rounded-full bg-neon animate-glow-pulse" />

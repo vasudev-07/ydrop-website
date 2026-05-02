@@ -56,62 +56,39 @@ function StepRow({
   const delay = `${index * 100}ms`;
 
   return (
-    /* 3-col grid: left-card | center-node | right-card */
-    <div
-      ref={ref}
-      className="grid items-center gap-4 sm:gap-8"
-      style={{ gridTemplateColumns: "1fr 64px 1fr" }}
-    >
-      {/* ── Left slot ──────────────────────────────── */}
-      <div className="flex justify-end">
-        {/* Show card here only for even steps (desktop); always hidden on mobile via opacity trick */}
+    <div ref={ref} className="step-row">
+      {/* Left slot — hidden on mobile, even steps on sm+ */}
+      <div className="step-row-left">
         <div
-          className={`w-full max-w-xs sm:max-w-sm transition-all duration-700 ${
-            isEven ? "" : "pointer-events-none select-none"
-          }`}
-          style={{
-            opacity: isEven ? (visible ? 1 : 0) : 0,
-            transform: visible ? "translateX(0)" : "translateX(-36px)",
-            transitionDelay: delay,
-          }}
+          className={`w-full max-w-sm transition-all duration-700 ${isEven ? "" : "pointer-events-none select-none"}`}
+          style={{ opacity: isEven ? (visible ? 1 : 0) : 0, transform: visible ? "translateX(0)" : "translateX(-36px)", transitionDelay: delay }}
         >
           {isEven && <StepCard step={step} align="right" />}
         </div>
       </div>
 
-      {/* ── Center: number node ─────────────────────── */}
+      {/* Center: number node */}
       <div className="flex flex-col items-center relative z-10">
         <div
-          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-neon bg-dark-200 flex items-center justify-center relative transition-all duration-500"
-          style={{
-            transitionDelay: `calc(${delay} + 80ms)`,
-            transform: visible ? "scale(1)" : "scale(0.4)",
-            opacity: visible ? 1 : 0,
-            boxShadow: visible
-              ? "0 0 22px rgba(255,0,0,0.55), 0 0 50px rgba(255,0,0,0.2)"
-              : "none",
-          }}
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-neon bg-dark-200 flex items-center justify-center relative transition-all duration-500"
+          style={{ transitionDelay: `calc(${delay} + 80ms)`, transform: visible ? "scale(1)" : "scale(0.4)", opacity: visible ? 1 : 0,
+            boxShadow: visible ? "0 0 22px rgba(255,0,0,0.55), 0 0 50px rgba(255,0,0,0.2)" : "none" }}
         >
-          <span className="text-neon font-extrabold text-lg tracking-tight leading-none">
-            {step.number}
-          </span>
-          {visible && (
-            <span className="absolute inset-0 rounded-full border border-neon/25 animate-ping opacity-30" />
-          )}
+          <span className="text-neon font-extrabold text-base sm:text-lg tracking-tight leading-none">{step.number}</span>
+          {visible && <span className="absolute inset-0 rounded-full border border-neon/25 animate-ping opacity-30" />}
         </div>
       </div>
 
-      {/* ── Right slot ─────────────────────────────── */}
-      <div className="flex justify-start">
+      {/* Right slot — always visible on mobile; odd steps on sm+ */}
+      <div className="step-row-right">
+        {/* Always show on mobile */}
+        <div className="sm:hidden">
+          <StepCard step={step} align="left" />
+        </div>
+        {/* sm+: only odd steps */}
         <div
-          className={`w-full max-w-xs sm:max-w-sm transition-all duration-700 ${
-            !isEven ? "" : "pointer-events-none select-none"
-          }`}
-          style={{
-            opacity: !isEven ? (visible ? 1 : 0) : 0,
-            transform: visible ? "translateX(0)" : "translateX(36px)",
-            transitionDelay: delay,
-          }}
+          className={`hidden sm:block transition-all duration-700 ${!isEven ? "" : "pointer-events-none select-none"}`}
+          style={{ opacity: !isEven ? (visible ? 1 : 0) : 0, transform: visible ? "translateX(0)" : "translateX(36px)", transitionDelay: delay }}
         >
           {!isEven && <StepCard step={step} align="left" />}
         </div>
@@ -185,27 +162,17 @@ export default function ProcessRoadmap() {
 
         {/* Roadmap */}
         <div className="relative">
-          {/* ── Dashed background line ───────────────── */}
+          {/* Dashed background line — left on mobile, center on sm+ */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 top-8 bottom-8 w-px pointer-events-none"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(to bottom, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 6px, transparent 6px, transparent 14px)",
-            }}
+            className="absolute left-[27px] sm:left-1/2 sm:-translate-x-1/2 top-8 bottom-8 w-px pointer-events-none"
+            style={{ backgroundImage: "repeating-linear-gradient(to bottom, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 6px, transparent 6px, transparent 14px)" }}
           />
-
-          {/* ── Glowing progress line (scroll-driven) ── */}
+          {/* Glowing progress line */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 top-8 w-px pointer-events-none origin-top transition-none"
-            style={{
-              height: `calc((100% - 4rem) * ${lineProgress})`,
-              background:
-                "linear-gradient(to bottom, rgba(255,0,0,0.9), rgba(255,0,0,0.4))",
-              boxShadow:
-                lineProgress > 0
-                  ? "0 0 8px rgba(255,0,0,0.7), 0 0 20px rgba(255,0,0,0.3)"
-                  : "none",
-            }}
+            className="absolute left-[27px] sm:left-1/2 sm:-translate-x-1/2 top-8 w-px pointer-events-none origin-top"
+            style={{ height: `calc((100% - 4rem) * ${lineProgress})`,
+              background: "linear-gradient(to bottom, rgba(255,0,0,0.9), rgba(255,0,0,0.4))",
+              boxShadow: lineProgress > 0 ? "0 0 8px rgba(255,0,0,0.7), 0 0 20px rgba(255,0,0,0.3)" : "none" }}
           />
 
           {/* ── Steps ───────────────────────────────── */}
