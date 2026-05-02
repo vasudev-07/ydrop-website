@@ -1,9 +1,49 @@
 "use client";
 
+import { useRef, useEffect, useCallback } from "react";
+
 export default function HeroSection() {
+  const tiltRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number | null>(null);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      const el = tiltRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / (rect.width / 2);
+      const dy = (e.clientY - cy) / (rect.height / 2);
+      el.style.transform = `perspective(900px) rotateY(${dx * 5}deg) rotateX(${-dy * 3.5}deg)`;
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    const el = tiltRef.current;
+    if (!el) return;
+    el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+  }, []);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    section.addEventListener("mousemove", handleMouseMove);
+    section.addEventListener("mouseleave", handleMouseLeave);
+    return () => {
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [handleMouseMove, handleMouseLeave]);
+
   return (
     <section
       id="hero"
+      ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center tech-grid-dense overflow-hidden"
     >
       {/* Radial glow behind content */}
@@ -18,14 +58,22 @@ export default function HeroSection() {
           Next-Gen Web &amp; Conversion Infrastructure
         </div>
 
-        {/* Headline */}
-        <h1 className="animate-fade-in-up animate-delay-100 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight">
-          <span className="text-neon">We don&apos;t just build.</span>
-          <br />
-          <span className="text-foreground">
-            We drive measurable growth.
-          </span>
-        </h1>
+        {/* Headline — 3D tilt wrapper */}
+        <div
+          ref={tiltRef}
+          style={{ transition: "transform 0.15s ease-out", transformStyle: "preserve-3d" }}
+        >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.15]">
+            {/* Line 1 — drops from top with heavy bounce */}
+            <span className="block text-neon animate-drop-bounce">
+              We don&apos;t just build.
+            </span>
+            {/* Line 2 — letter-spacing expands in from center */}
+            <span className="animate-letter-expand text-foreground">
+              We drive measurable growth.
+            </span>
+          </h1>
+        </div>
 
         {/* Subtext */}
         <p className="animate-fade-in-up animate-delay-200 mt-6 text-lg sm:text-xl text-foreground/60 max-w-2xl mx-auto leading-relaxed">
