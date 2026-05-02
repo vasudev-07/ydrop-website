@@ -1,9 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Dancing_Script, Geist } from "next/font/google";
 import "./globals.css";
+import MouseFlashlight from "./components/MouseFlashlight";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const signature = Dancing_Script({
+  variable: "--font-signature",
+  subsets: ["latin"],
+  weight: ["700"],
+});
+
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
 });
 
@@ -19,8 +31,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${signature.variable} ${geist.variable} antialiased`}>
       <body className="min-h-screen flex flex-col bg-dark-100 text-foreground">
+        <MouseFlashlight />
         {children}
       </body>
     </html>
